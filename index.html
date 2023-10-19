@@ -1,45 +1,24 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game</title>
-    <link rel="stylesheet" href="./style/style.css">
+    <title>Document</title>
 </head>
-
 <body>
-  
     <canvas id="canvas" width="400" height="400"></canvas>
 
+
     <script>
-        class Snake {
-            constructor() {
-                this.snakeBody = [
-                    { x: 10, y: 10 },
-                    { x: 20, y: 10 },
-                    { x: 30, y: 10 }
-                ];
-            }
+        const WIDTH = 400;
+        const HEIGHT = 400;
+        const canvas = document.querySelector("#canvas");
+        const cvs = canvas.getContext('2d');
+        cvs.fillStyle = 'black';
+        cvs.fillRect(0,0,WIDTH,HEIGHT);
 
-            displaySnakeOnCanvas(canvasId) {
-                const canvas = document.getElementById("canvas");
-                const context = canvas.getContext("2d");
-
-                context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-
-                // Display the snake on the canvas
-                this.snakeBody.forEach(segment => {
-                    context.fillStyle = "green"; // Set the color
-                    context.fillRect(segment.x, segment.y, 10, 10); // Draw a segment
-                });
-            }
-        }
-
-        const snake = new Snake();
-        snake.displaySnakeOnCanvas("gameCanvas");
 
     </script>
 </body>
-
 </html>
