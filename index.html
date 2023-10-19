@@ -1,24 +1,86 @@
-
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <canvas id="canvas" width="400" height="400"></canvas>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>貪吃蛇蛇</title>
+    <style>
+      #game-board {
+        width: 400px;
+        height: 400px;
+        background-color: #f0f0f0;
+        position: relative;
+      }
 
+      .snake-segment {
+        width: 20px;
+        height: 20px;
+        background-color: green;
+        position: absolute;
+      }
+
+      .food {
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game-board"></div>
 
     <script>
-        const WIDTH = 400;
-        const HEIGHT = 400;
-        const canvas = document.querySelector("#canvas");
-        const cvs = canvas.getContext('2d');
-        cvs.fillStyle = 'black';
-        cvs.fillRect(0,0,WIDTH,HEIGHT);
+      const gameBoard = document.getElementById("game-board");
+      let snake = [{ x: 10, y: 10 }];
+      let direction = "right";
 
+      function createSnake() {
+        snake.forEach(segment => {
+          const snakeSegment = document.createElement("div");
+          snakeSegment.className = "snake-segment";
+          snakeSegment.style.left = segment.x + "px";
+          snakeSegment.style.top = segment.y + "px";
+          gameBoard.appendChild(snakeSegment);
+        });
+      }
 
+      function createFood() {
+        const food = document.createElement("div");
+        food.className = "food";
+        const x = Math.floor(Math.random() * 20) * 20;
+        const y = Math.floor(Math.random() * 20) * 20;
+        food.style.left = x + "px";
+        food.style.top = y + "px";
+        gameBoard.appendChild(food);
+      }
+
+      function moveSnake() {
+        const head = Object.assign({}, snake[0]);
+
+        if (direction === "right") head.x += 20;
+        if (direction === "left") head.x -= 20;
+        if (direction === "up") head.y -= 20;
+        if (direction === "down") head.y += 20;
+
+        snake = [head, ...snake.slice(0, -1)];
+      }
+
+      function updateGame() {
+        moveSnake();
+        render();
+      }
+
+      function render() {
+        const segments = document.querySelectorAll(".snake-segment");
+        segments.forEach((segment, index) => {
+          segment.style.left = snake[index].x + "px";
+          segment.style.top = snake[index].y + "px";
+        });
+      }
+
+      createSnake();
+      createFood();
+      setInterval(updateGame, 100);
     </script>
-</body>
+  </body>
 </html>
