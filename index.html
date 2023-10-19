@@ -9,32 +9,36 @@
 </head>
 
 <body>
-    <nav id="nav">
-        <ul>
-            <li><a href=""></a><img src="./icon/house-chimney-solid.svg" alt=""></li>
-            <li><a href=""></a><img src="./icon/address-card-solid.svg" alt=""></li>
-            <li><a href=""></a><img src="./icon/newspaper-solid.svg" alt=""></li>
-
-        </ul>
-
-
-    </nav>
-    <p id="Time">現在時刻:</p>
+  
+    <canvas id="canvas" width="400" height="400"></canvas>
 
     <script>
-        function updateClock() {
-            const T = document.getElementById("Time");
-            const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
+        class Snake {
+            constructor() {
+                this.snakeBody = [
+                    { x: 10, y: 10 },
+                    { x: 20, y: 10 },
+                    { x: 30, y: 10 }
+                ];
+            }
 
-            T.innerText = `現在時刻: ${hours}:${minutes}:${seconds}`;
+            displaySnakeOnCanvas(canvasId) {
+                const canvas = document.getElementById("canvas");
+                const context = canvas.getContext("2d");
+
+                context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+
+                // Display the snake on the canvas
+                this.snakeBody.forEach(segment => {
+                    context.fillStyle = "green"; // Set the color
+                    context.fillRect(segment.x, segment.y, 10, 10); // Draw a segment
+                });
+            }
         }
 
-        setInterval(updateClock, 1000);
+        const snake = new Snake();
+        snake.displaySnakeOnCanvas("gameCanvas");
 
-        updateClock();
     </script>
 </body>
 
